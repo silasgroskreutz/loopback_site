@@ -1,0 +1,38 @@
+{
+  "name": "Profile",
+  "base": "Change",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "birth_date": {
+      "type": "date"
+    },
+    "age": {
+      "type": "string"
+    },
+    "history": {
+      "type": ["object"]
+    }
+  },
+  "validations": [],
+  "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "user",
+      "foreignKey": "userId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
