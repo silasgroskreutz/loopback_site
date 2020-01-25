@@ -39,5 +39,9 @@
   "CustomAccessToken": {
     "dataSource": "db",
     "public": true
+  },
+  "post": {
+    "dataSource": "db",
+    "public": true
   }
 }
