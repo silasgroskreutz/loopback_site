@@ -43,5 +43,9 @@
   "post": {
     "dataSource": "db",
     "public": true
+  },
+  "category": {
+    "dataSource": "db",
+    "public": true
   }
 }

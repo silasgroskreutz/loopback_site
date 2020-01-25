@@ -1,8 +1,3 @@
-// Copyright IBM Corp. 2016. All Rights Reserved.
-// Node module: loopback-workspace
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
 "use strict";
 
 const loopback = require("loopback");
@@ -55,7 +50,7 @@ app.models.user.afterRemote("create", (ctx, user, next) => {
       userId: user.id
     },
     (error, result) => {
-      if (!err && result) {
+      if (!error && result) {
         console.log("Created new profile!", result);
       } else {
         console.log("There is an error", error);
@@ -63,4 +58,49 @@ app.models.user.afterRemote("create", (ctx, user, next) => {
       next();
     }
   );
+});
+
+app.models.Role.find({ where: { name: "admin" } }, (error, role) => {
+  if (!error && role) {
+    console.log("No error, role is", role);
+    if (role.length === 0) {
+      app.models.Role.create(
+        {
+          name: "admin"
+        },
+        (error2, result) => {
+          if (!error2 && result) {
+            app.models.user.findOne((usererror, user) => {
+              if (!usererror && user) {
+                result.principals.create(
+                  {
+                    principalType: app.models.RoleMapping.USER,
+                    principalId: user.id
+                  },
+                  (error3, principal) => {
+                    console.log("Created principal", error3, principal);
+                  }
+                );
+              }
+            });
+          }
+        }
+      );
+    }
+  }
+});
+
+app.models.Role.find({ where: { name: "editor" } }, (error, roles) => {
+  if (!error && roles) {
+    if (roles.length === 0) {
+      app.models.Role.create(
+        {
+          name: "editor"
+        },
+        (creationErr, result) => {
+          console.log(creationErr, result);
+        }
+      );
+    }
+  }
 });
